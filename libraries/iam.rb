@@ -1,5 +1,6 @@
 # author: Alex Bedley
 # author: Steffanie Freeman
+# author: Simon Varlow
 
 class Iam < Inspec.resource(1)
  name 'aws_iam_user'
@@ -20,6 +21,14 @@ class Iam < Inspec.resource(1)
 
   def is_mfa_enabled?
     !@user.mfa_devices.first.nil?
+  end
+
+  def has_console_password?
+    begin 
+    	return !@user.login_profile.create_date.nil?
+    rescue
+    	return false
+    end
   end
 
 end
