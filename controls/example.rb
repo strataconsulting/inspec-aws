@@ -14,7 +14,6 @@ describe aws_iam_user('mfa_test_user') do
   its('has_console_password?') { should be true }
 end
 
-
 describe aws_iam_user('console_password_mfa_test_user') do
   its('is_mfa_enabled?') { should be false }
   its('has_console_password?') { should be false }
