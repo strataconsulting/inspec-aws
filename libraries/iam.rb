@@ -1,17 +1,13 @@
 # author: Alex Bedley
 # author: Steffanie Freeman
 # author: Simon Varlow
-
 class Iam < Inspec.resource(1)
- name 'aws_iam_user'
+  name 'aws_iam_user'
   desc 'Verifies settings for AWS IAM user'
-
   example "
     describe aws_iam_user() do
-
-	end
+    end
   "
-
   def initialize(name, conn = AWSConnection.new)
     @name = name
     @iam_resource = conn.iam_resource
@@ -23,11 +19,8 @@ class Iam < Inspec.resource(1)
   end
 
   def has_console_password?
-    begin 
-    	return !@user.login_profile.create_date.nil?
-    rescue
-    	return false
-    end
+    return !@user.login_profile.create_date.nil?
+  rescue
+    return false
   end
-
 end
