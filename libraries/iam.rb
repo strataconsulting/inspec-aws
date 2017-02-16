@@ -12,9 +12,8 @@ class Iam < Inspec.resource(1)
 	end
   "
 
-  def initialize(name)
+  def initialize(name, conn = AWSConnection.new)
     @name = name
-    conn = AWSConnection.new
     @iam_resource = conn.iam_resource
     @user = @iam_resource.user(@name)
   end
