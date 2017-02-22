@@ -42,6 +42,12 @@ namespace :test do
     sh("bundle exec inspec exec #{integration_dir}/verify")
   end
 
+  task :verify do
+    integration_dir = "test/integration"
+    
+    sh("bundle exec inspec exec #{integration_dir}/verify")
+  end
+
   task :cleanup do
     integration_dir = "test/integration"
     puts "----> Destroy"
