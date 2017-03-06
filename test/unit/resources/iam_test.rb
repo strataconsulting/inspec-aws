@@ -19,12 +19,12 @@ Username = "test"
 
   def test_that_MFA_enable_returns_true_if_MFA_Enabled
     @mockUser.expect :mfa_devices, ["test"]
-    assert Iam.new(Username, @mockConn).is_mfa_enabled?
+    assert Iam.new(Username, @mockConn).mfa_enabled?
   end
 
   def test_that_MFA_enable_returns_false_if_MFA_is_not_Enabled
     @mockUser.expect :mfa_devices, []
-    assert !Iam.new(Username, @mockConn).is_mfa_enabled?
+    assert !Iam.new(Username, @mockConn).mfa_enabled?
   end
 
   def test_that_console_Password_returns_true_if_console_Password_has_been_set
