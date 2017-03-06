@@ -5,7 +5,9 @@ class Iam < Inspec.resource(1)
   name 'aws_iam_user'
   desc 'Verifies settings for AWS IAM user'
   example "
-    describe aws_iam_user() do
+    describe aws_iam_user('test_user_name') do
+      its('is_mfa_enabled?') { should be false }
+      its('has_console_password?') { should be true }
     end
   "
   def initialize(name, conn = AWSConnection.new)
