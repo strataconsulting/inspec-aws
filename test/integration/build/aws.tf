@@ -16,6 +16,7 @@ resource "aws_iam_user" "mfa_not_enabled_user" {
 
 resource "aws_iam_user" "console_password_enabled_user" {
     name = "console_password_enabled_user"
+    force_destroy = true
 }
 
 resource "aws_iam_user_login_profile" "u" {
