@@ -20,7 +20,7 @@ class Iam < Inspec.resource(1)
 
   def has_console_password?
     return !@user.login_profile.create_date.nil?
-  rescue
+  rescue Aws::IAM::Errors::NoSuchEntity
     return false
   end
 end

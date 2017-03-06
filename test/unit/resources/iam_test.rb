@@ -1,4 +1,5 @@
 # author: Simon Varlow
+require 'aws-sdk'
 require 'helper'
 
 require 'iam'
@@ -36,5 +37,24 @@ Username = "test"
     @mockUser.expect :login_profile, @mockProfile
     @mockProfile.expect :create_date, nil
     assert !Iam.new(Username, @mockConn).has_console_password?
+  end
+
+  def test_that_console_Password_returns_false_if_console_Password_throws_no_such_entity
+    @mockUser.expect :login_profile, @mockProfile
+    @mockProfile.expect :create_date, nil do |args|
+      raise Aws::IAM::Errors::NoSuchEntity.new nil, nil
+    end
+    assert !Iam.new(Username, @mockConn).has_console_password?
+  end
+
+  def test_that_console_Password_throws_if_console_Password_throws_not_no_such_entity
+    @mockUser.expect :login_profile, @mockProfile
+    @mockProfile.expect :create_date, nil do |args|
+      raise ArgumentError
+    end
+
+    assert_raises ArgumentError do
+      Iam.new(Username, @mockConn).has_console_password?
+    end
   end
 end
