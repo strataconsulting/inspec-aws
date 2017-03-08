@@ -1,5 +1,5 @@
 describe aws_iam_user('mfa_not_enabled_user') do
-  its('mfa_enabled?') { should be false }
+  its('has_mfa_enabled?') { should be false }
   its('has_console_password?') { should be false }
 end
 

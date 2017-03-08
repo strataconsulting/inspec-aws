@@ -6,7 +6,7 @@ class AwsIamUser < Inspec.resource(1)
   desc 'Verifies settings for AWS IAM user'
   example "
     describe aws_iam_user('test_user_name') do
-      its('mfa_enabled?') { should be false }
+      its('has_mfa_enabled?') { should be false }
       its('has_console_password?') { should be true }
     end
   "
@@ -16,7 +16,7 @@ class AwsIamUser < Inspec.resource(1)
     @user = @iam_resource.user(@name)
   end
 
-  def mfa_enabled?
+  def has_mfa_enabled?
     !@user.mfa_devices.first.nil?
   end
 
