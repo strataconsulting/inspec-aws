@@ -25,4 +25,22 @@ class AwsIamUser < Inspec.resource(1)
   rescue Aws::IAM::Errors::NoSuchEntity
     return false
   end
+
+  def console_password
+    return ConsolePassword.new
+  end
+
+  def seconds_since_last_console_password_use
+    return 10
+  end
+end
+
+class ConsolePassword
+  def initialize()
+    @seconds_since_last_use = 10
+  end
+
+  def seconds_since_last_use
+    @seconds_since_last_use
+  end
 end
