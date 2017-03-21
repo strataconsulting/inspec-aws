@@ -18,4 +18,12 @@ class AwsIamUsers < Inspec.resource(1)
   def list_users()
     @iam_resource.users
   end
+
+    filter = FilterTable.create
+    filter.add_accessor(:where)
+          .add_accessor(:entries)
+          .add(:mfa_device, field: :mfa_devices.first.nil?) 
+          .add(:console_password, field: :has_console_password?)
+    filter.connect(self, :collect_user_details)  
+
 end
