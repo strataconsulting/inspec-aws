@@ -14,8 +14,8 @@ class AwsIamUsers < Inspec.resource(1)
   def initialize(conn = AWSConnection.new)
     @iam_resource = conn.iam_resource
   end
-  
-  def list_users()
+
+  def list_users
     @iam_resource.users
   end
 end
