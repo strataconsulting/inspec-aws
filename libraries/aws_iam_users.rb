@@ -15,7 +15,14 @@ class AwsIamUsers < Inspec.resource(1)
     @iam_resource = conn.iam_resource
   end
 
-  def list_users
-    @iam_resource.users
+  filter = FilterTable.create
+  filter.add_accessor(:where)
+    .add_accessor(:entries)
+    .add(:has_console_password?, field: 'x')
+    .add(:is_mfa_enabled?, field: 'is_mfa_enabled?')
+    .connect(self, :burnthis)
+
+  def burnthis
+     return [{'is_mfa_enabled?' => true, 'x' => true}]
   end
 end
