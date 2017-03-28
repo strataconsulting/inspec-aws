@@ -7,8 +7,8 @@ class AwsIamUsers < Inspec.resource(1)
   name 'aws_iam_users'
   desc 'Verifies settings for AWS IAM users'
   example "
-    describe users.where(has_console_password?: true).entries do
-      its('is_mfa_enabled?') { should be true }
+    describe aws_iam_users.where( 'has_console_password?' => true ) do
+      its('has_mfa_enabled?') { should eq [true] }
     end
   "
   def initialize(conn = AWSConnection.new)
@@ -16,13 +16,17 @@ class AwsIamUsers < Inspec.resource(1)
   end
 
   filter = FilterTable.create
-  filter.add_accessor(:where)
+  filter
+    .add_accessor(:where)
     .add_accessor(:entries)
-    .add(:has_console_password?, field: 'x')
-    .add(:is_mfa_enabled?, field: 'is_mfa_enabled?')
-    .connect(self, :burnthis)
+    .add(:has_console_password?, field: 'has_console_password?')
+    .add(:has_mfa_enabled?, field: 'has_mfa_enabled?')
+    .connect(self, :get_users)
 
-  def burnthis
-     return [{'is_mfa_enabled?' => true, 'x' => true}]
+  def get_users
+    return [
+      {'has_mfa_enabled?' => true, 'has_console_password?' => true},
+      {'has_mfa_enabled?' => true, 'has_console_password?' => false}
+    ]
   end
 end
