@@ -26,7 +26,8 @@ class AwsIamUsers < Inspec.resource(1)
   def get_users
     return [
       {'has_mfa_enabled?' => true, 'has_console_password?' => true},
-      {'has_mfa_enabled?' => true, 'has_console_password?' => false}
+      {'has_mfa_enabled?' => true, 'has_console_password?' => false},
+      {'has_mfa_enabled?' => false, 'has_console_password?' => false}
     ]
   end
 end
