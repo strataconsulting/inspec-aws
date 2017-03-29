@@ -6,8 +6,8 @@ class AwsIamUser < Inspec.resource(1)
   desc 'Verifies settings for AWS IAM user'
   example "
     describe aws_iam_user('test_user_name') do
-      its('has_mfa_enabled?') { should be false }
-      its('has_console_password?') { should be true }
+      it { should_not have_mfa_enabled }
+      it { should have_console_password }
     end
   "
   def initialize(name, conn = AWSConnection.new)
@@ -26,21 +26,16 @@ class AwsIamUser < Inspec.resource(1)
     return false
   end
 
-  def console_password
-    return ConsolePassword.new
+  def console_password_last_used
+    @user.password_last_used
   end
 
-  def seconds_since_last_console_password_use
-    return 10
+  def access_key_count
+    access_keys.length
+  end
+
+  def access_keys
+    @access_keys ||= @user.access_keys.entries
   end
 end
 
-class ConsolePassword
-  def initialize()
-    @seconds_since_last_use = 10
-  end
-
-  def seconds_since_last_use
-    @seconds_since_last_use
-  end
-end
