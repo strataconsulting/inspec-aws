@@ -3,7 +3,7 @@
 require 'aws-sdk'
 require 'helper'
 
-require 'aws_iam_user'
+require 'aws_iam_user_provider'
 
 class AwsIamUserProviderTest < Minitest::Test
 Username = "test" 
