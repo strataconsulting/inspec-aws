@@ -5,7 +5,7 @@ require 'helper'
 
 require 'aws_iam_user'
 
-class AwsIamUserProvider < Minitest::Test
+class AwsIamUserProviderTest < Minitest::Test
 Username = "test" 
    
    def setup
