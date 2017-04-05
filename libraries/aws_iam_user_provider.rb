@@ -12,7 +12,6 @@ class AwsIamUserProvider
   end
 
   class << self
-
     def has_mfa_enabled?(aws_user)
       !aws_user.mfa_devices.first.nil?
     end
