@@ -7,12 +7,14 @@ class AwsIamUsers < Inspec.resource(1)
 
   def initialize(aws_user_provider = AwsIam::UserProvider.new,
                  user_factory = AwsIamUserFactory.new)
-    @users = aws_user_provider.list_users
+    @user_provider = aws_user_provider
     @user_factory = user_factory
   end
 
   def users
-    @users.map { |user|
+    users ||= @user_provider.list_users unless @user_provider.nil?
+
+    users.map { |user|
       @user_factory.create_user(user)
     }
   end
