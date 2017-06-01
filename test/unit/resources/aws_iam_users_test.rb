@@ -1,5 +1,8 @@
 # author: Adnan Duric
 # author: Steffanie Freeman
+require 'aws-sdk'
+require 'helper'
+
 require 'aws_iam_users'
 
 class AwsIamUsersTest < Minitest::Test
