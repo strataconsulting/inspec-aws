@@ -14,6 +14,7 @@ class AwsIamUsersTest < Minitest::Test
     {name: "test3", has_mfa_enabled?: true}]
 
     @mock_user_provider.expect :list_users, user_list
+    @mock_user_provider.expect :nil?, false
     user_collection = AwsIamUsers.new(@mock_user_provider)
     user_collection.users.each do |user| 
       assert user.has_mfa_enabled?
