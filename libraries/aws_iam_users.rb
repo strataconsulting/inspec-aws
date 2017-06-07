@@ -8,7 +8,7 @@ class AwsIamUsers < Inspec.resource(1)
     filter = FilterTable.create
     filter.add_accessor(:where)
           .add_accessor(:entries)
-          .add(:user_name, field: :username)
+          .add(:user_name, field: :user)
           .add(:has_mfa_enabled?)
           .add(:has_console_password?)
     filter.connect(self, :collect_user_details)
@@ -20,9 +20,9 @@ class AwsIamUsers < Inspec.resource(1)
   end
 
   def collect_user_details
-    @users_cache ||= @user_provider.collect_user_details unless @user_provider.nil?
+    @users_cache ||= @user_provider.list_users unless @user_provider.nil?
   end
-  
+
   def users
     users = []
     users ||= @user_provider.list_users unless @user_provider.nil?
