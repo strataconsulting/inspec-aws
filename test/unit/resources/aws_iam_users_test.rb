@@ -37,4 +37,17 @@ class AwsIamUsersTest < Minitest::Test
     end
   end
 
+  def test_nil_user_provider_returns_empty_list
+    user_collection = AwsIamUsers.new(nil, @mock_user_factory)
+    assert_equal(user_collection.users,[])
+  end
+
+  def test_empty_list_user_provider_returns_empty_list
+    user_list = []
+    @mock_user_provider.expect :list_users, user_list
+    @mock_user_provider.expect :nil?, false
+    user_collection = AwsIamUsers.new(@mock_user_provider, @mock_user_factory)
+    assert_equal(user_collection.users,[])
+  end
+
 end
