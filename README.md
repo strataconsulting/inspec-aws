@@ -1,24 +1,15 @@
-# InSpec AWS Resource Pack
+# InSpec for AWS
 
-NOTE: This is early access and not suitable for production. We use this repository to prototype and verify our design goals.
+## Roadmap
 
-This resource pack provides resources for AWS. It will ship with the required resources to write your own AWS tests.
+This repository is the development repository for InSpec for AWS. Once [RFC Platforms](https://github.com/chef/inspec/issues/1661) is fully implemented in InSpec, this repository is going to be merged into core InSpec.
+
+As of now, AWS resources are implemented as an InSpec resource pack. It will ship with the required resources to write your own AWS tests.
 
 ```
 ├── README.md - this readme
 └── libraries - contains AWS resources
 ```
-
-## Design Goals
-
-Goals for this project are:
-
-- Find the right abstraction layer for AWS
-- InSpec AWS resources should be aware that they target AWS
-- No mixture of InSpec OS and InSpec AWS resource in one profile possible
-- AWS should become a native target for InSpec `inspec exec inspec-aws -t aws://accesskey:secret@region`
-
-This project will be merged into [InSpec](https://github.com/chef/inspec), once we reached all the goals.
 
 ## Get started
 
@@ -97,7 +88,7 @@ bundle exec rake test
 ### Integration tests
 
 To run the integration tests, please make sure all required environment variables like `AWS_ACCESS_KEY_ID`
-, `AWS_SECRET_ACCESS_KEY` and `AWS_DEFAULT_REGION` are set properly. (`AWS_DEFAULT_REGION` **must** be set to **us-east-1** when running the integration tests.) We use terraform to create the AWS setup and InSpec to verify the all aspects. Integration tests can be executed via:
+, `AWS_SECRET_ACCESS_KEY` and `AWS_DEFAULT_REGION` are set properly. (`AWS_DEFAULT_REGION` **must** be set to **us-east-1** when running the integration tests.) We use terraform to create the AWS setup and InSpec to verify the all aspects. If you want to use a specific terraform environment, set environment variable `INSPEC_TERRAFORM_ENV`. Integration tests can be executed via:
 
 ```
 bundle exec rake test:integration
@@ -105,9 +96,11 @@ bundle exec rake test:integration
 
 This task sets up test AWS resources, runs the integration tests, and then cleans up the resources.  To perform these tasks independently, please call them individually:
 
+* `bundle exec rake test:configure_test_environment`
 * `bundle exec rake test:setup_integration_tests`
 * `bundle exec rake test:run_integration_tests`
 * `bundle exec rake test:cleanup_integration_tests`
+* `bundle exec rake test:destroy_test_environment`
 
 ## Kudos
 
@@ -117,8 +110,8 @@ This project was inspired by [inspec-aws](https://github.com/arothian/inspec-aws
 
 |  |  |
 | ------ | --- |
-| **Author:** | Christoph Hartmann (<chartmann@chef.io>) |
-| **Copyright:** | Copyright (c) 2016 Chef Software Inc. |
+| **Author:** | Christoph Hartmann (<chris@lollyrock.com>) |
+| **Copyright:** | Copyright (c) 2017 Chef Software Inc. |
 | **License:** | Apache License, Version 2.0 |
 
 Licensed under the Apache License, Version 2.0 (the "License");
