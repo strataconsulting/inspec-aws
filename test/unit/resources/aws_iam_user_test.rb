@@ -40,7 +40,7 @@ class AwsIamUserTest < Minitest::Test
     mock_access_key_factory.expect :create_access_key, stub_access_key_resource, [stub_aws_access_key]
 
     assert_equal(stub_access_key_resource,
-                 AwsIamUser.new(Username, @mock_user_provider, mock_access_key_factory).access_keys[0])
+                 AwsIamUser.new({name: Username}, @mock_user_provider, mock_access_key_factory).access_keys[0])
 
     mock_access_key_factory.verify
   end
