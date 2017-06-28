@@ -5,13 +5,11 @@ class AwsIamUsers < Inspec.resource(1)
   desc 'Verifies settings for AWS IAM users'
   example ''
 
-    filter = FilterTable.create
-    filter.add_accessor(:where)
-          .add_accessor(:entries)
-          .add(:user_name, field: :user)
-          .add(:has_mfa_enabled?)
-          .add(:has_console_password?)
-    filter.connect(self, :collect_user_details)
+  filter = FilterTable.create
+  filter.add_accessor(:where)
+        .add_accessor(:entries)
+        .add(:exists?) { |x| !x.entries.empty? }
+  filter.connect(self, :collect_user_details)
 
   def initialize(aws_user_provider = AwsIam::UserProvider.new,
                  user_factory = AwsIamUserFactory.new)
@@ -29,6 +27,10 @@ class AwsIamUsers < Inspec.resource(1)
     users.map { |user|
       @user_factory.create_user(user)
     }
+  end
+
+  def to_s
+    'IAM Users'
   end
 
   class AwsIamUserFactory
