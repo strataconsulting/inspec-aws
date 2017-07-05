@@ -13,11 +13,13 @@ class AwsIamUserTest < Minitest::Test
 
   def test_that_MFA_enable_returns_true_if_MFA_Enabled
     @mock_user_provider.expect :user, {has_mfa_enabled?: true}, [Username]
+    @mock_user_provider.expect :has_mfa_enabled?, true, [Object]
     assert AwsIamUser.new({name: Username}, @mock_user_provider).has_mfa_enabled?
   end
 
   def test_that_MFA_enable_returns_false_if_MFA_is_not_Enabled
     @mock_user_provider.expect :user, {has_mfa_enabled?: false}, [Username]
+    @mock_user_provider.expect :has_mfa_enabled?, false, [Object]
     refute AwsIamUser.new({name: Username}, @mock_user_provider).has_mfa_enabled?
   end
 
