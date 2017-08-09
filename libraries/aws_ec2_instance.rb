@@ -1,15 +1,15 @@
 # author: Christoph Hartmann
 
-class Ec2 < Inspec.resource(1)
-  name 'aws_ec2'
+class AwsEc2Instance < Inspec.resource(1)
+  name 'aws_ec2_instance'
   desc 'Verifies settings for an EC2 instance'
 
   example "
-    describe aws_ec2('i-123456') do
+    describe aws_ec2_instance('i-123456') do
       it { should be_running }
     end
 
-    describe aws_ec2(name: 'my-instance') do
+    describe aws_ec2_instance(name: 'my-instance') do
       it { should be_running }
     end
   "
